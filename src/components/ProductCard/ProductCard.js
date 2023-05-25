@@ -1,17 +1,17 @@
 import { useContext } from "react";
 import { CartContext } from "../../utils/CartContext";
 
-export const ProductCard = ({product}) => {
+export const ProductCard = ({burger}) => {
   const { addToCart } = useContext(CartContext);
 
   const handleAddToCart = () => {
-    addToCart(product);
+    addToCart(burger);
   };
 
   return (
     <li>
-      <h3>{product.name}</h3>
-      <p>Price: ${product.price}</p>
+      <h3>{burger.name}</h3>
+      <p>Price: ${burger.price}</p>
       <button type="button" onClick={handleAddToCart}>
         Add to Cart
       </button>
