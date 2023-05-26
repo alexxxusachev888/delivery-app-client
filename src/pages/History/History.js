@@ -28,7 +28,7 @@ export const History = () => {
     setIsLoading(true);
     const { data } = await getOrdersByPhoneOrEmail(query);
 
-    if (!data || !data.orders || data.orders.length === 0) {
+    if (!data) {
       setNoOrders(true);
       setIsLoading(false);
       return
