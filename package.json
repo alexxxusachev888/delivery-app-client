@@ -2,6 +2,7 @@
   "name": "delivery-app-client",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://alexxxusachev888.github.io/delivery-app-client/",
   "dependencies": {
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
