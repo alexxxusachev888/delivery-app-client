@@ -1,11 +1,13 @@
 import React, { createContext, useState, useEffect } from "react";
 import { getAllBurgers } from '../services/api';
+import { Spinner } from "../components/Spinner/Spinner";
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() => JSON.parse(localStorage.getItem("cart")) || []);
   const [burgers, setBurgers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const cartData = localStorage.getItem("cart");
@@ -16,21 +18,20 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
-    localStorage.setItem("burgers", JSON.stringify(burgers));
-  }, [cartItems, burgers]);
+  }, [cartItems]);
 
   useEffect(() => {
-    const loadBurgers = async () => {
-      const { burgers } = await getAllBurgers();
-
-      if (burgers.length !== 0) {
-        setBurgers(burgers);
-      } else {
-        console.log("No burgers in the database");
-      }
-    };
-
-    loadBurgers();
+        const loadBurgers = async () => {
+          setIsLoading(true);
+        const { burgers } = await getAllBurgers();
+          setIsLoading(false);
+        if (burgers.length !== 0) {
+          setBurgers(burgers);
+        } else {
+          console.log("No burgers in the database");
+        }
+      };
+      loadBurgers();
   }, []);
 
   const addToCart = (product) => {
@@ -77,6 +78,7 @@ export const CartProvider = ({ children }) => {
     <CartContext.Provider
       value={{ burgers, cartItems, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart }}
     >
+      {isLoading && <Spinner />}
       {children}
     </CartContext.Provider>
   );

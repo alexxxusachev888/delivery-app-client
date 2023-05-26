@@ -1,4 +1,4 @@
-import {Home} from "../../components/Home/Home.js";
+import { Home } from "../../components/Home/Home.js";
 import { useContext } from "react";
 import { CartContext } from "../../utils/CartContext.js";
 

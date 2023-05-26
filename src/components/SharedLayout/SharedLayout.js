@@ -1,43 +1,17 @@
-import { Outlet, NavLink } from "react-router-dom";
-import styled from "@emotion/styled";
-
-const Header = styled.header`
-  background-color: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.text};
-  padding: 10px;
-`;
-
-const Nav = styled.nav`
-  display: flex;
-  justify-content: space-around;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: center;
-  }
-`;
-
-const StyledNavLink = styled(NavLink)`
-  color: ${({ theme }) => theme.colors.text};
-  text-decoration: none;
-  margin-right: 10px;
-
-  &.active {
-    font-weight: bold;
-  }
-`;
+import { Outlet } from "react-router-dom";
+import { Container, Header, Nav, CustomNavLink } from "./SharedLayout.styled";
 
 export const SharedLayout = (props) => {
-    return (   
-        <div>
-            <header>
-            <nav>
-                <NavLink to="/">Shop</NavLink>
-                <NavLink to="/cart">Shopping Cart</NavLink>
-                <NavLink to="/history">History</NavLink>
-            </nav>
-            </header>
-            <Outlet />
-        </div>
-    )
-}
+  return (   
+    <Container>
+      <Header>
+        <Nav>
+          <CustomNavLink to="/" activeClassName="active">Shop</CustomNavLink>
+          <CustomNavLink to="/cart" activeClassName="active">Shopping Cart</CustomNavLink>
+          <CustomNavLink to="/history" activeClassName="active">History</CustomNavLink>
+        </Nav>
+      </Header>
+      <Outlet />
+    </Container>
+  );
+};

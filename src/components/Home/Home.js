@@ -1,19 +1,28 @@
 import React, { useState } from "react";
 import { ProductCard } from "../ProductCard/ProductCard";
 import { shopList } from "../../utils/shopList";
+import { Main, Heading, ShopList, ProductList } from "./Home.styled";
 
-export const Home = ({burgers}) => {
+export const Home = ({ burgers }) => {
   const [selectedShop, setSelectedShop] = useState(null);
+
+  let filteredBurgers = burgers;
+
+  if (selectedShop && selectedShop !== "All") {
+    filteredBurgers = burgers.filter( burger => burger.shop === selectedShop);
+  }
+
+  const burgersToRender = filteredBurgers.length > 0 ? filteredBurgers : burgers;
 
   const handleShopSelection = (shop) => {
     setSelectedShop(shop);
   };
 
   return (
-    <main>
-      <h1>Home</h1>
+    <Main>
+      <Heading>Home</Heading>
       <div>
-        <ul>
+        <ShopList>
           {shopList.map((shop) => (
             <li
               key={shop}
@@ -23,19 +32,18 @@ export const Home = ({burgers}) => {
               {shop}
             </li>
           ))}
-        </ul>
+        </ShopList>
       </div>
-      <div>
-        <ul>
-          {burgers.map((burger) => (
+      <ProductList>
+        {burgersToRender.map((burger) => (
+          <li key={burger._id}>
             <ProductCard
-              key={burger._id}
               burger={burger}
               disabled={selectedShop !== null && selectedShop !== burger.shop}
             />
-          ))}
-        </ul>
-      </div>
-    </main>
+          </li>
+        ))}
+      </ProductList>
+    </Main>
   );
 };

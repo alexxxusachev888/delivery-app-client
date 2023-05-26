@@ -5,8 +5,5 @@ export const shopList = [
     "Burger King",
     "Pizza Hut",
     "Domino's Pizza",
-    "Starbucks",
-    "Taco Bell",
-    "Wendy's",
-    "Dunkin' Donuts"
+    "All"
   ];
