@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState  } from 'react';
 import { Formik, Form, Field } from "formik";
 import { addNewOrder } from "../../services/api";
 import { CartItem } from '../CartItem/CartItem';
@@ -18,6 +18,8 @@ import {
   SubmitButton } from './Cart.styled';
 
 export const Cart = ({ cartItems, removeFromCart, clearCart, increaseQuantity, decreaseQuantity }) => {
+  const [orderSent, setOrderSent] = useState(false);
+
   const removeItem = useCallback(
     (itemId) => removeFromCart(itemId),
     [removeFromCart]
@@ -40,11 +42,16 @@ export const Cart = ({ cartItems, removeFromCart, clearCart, increaseQuantity, d
   const handleSubmit = async (values) => {
     const order = { ...values, totalSum: calculateTotalPrice(), order: cartItems };
     await addNewOrder(order);
+    setOrderSent(true);
+    clearCart();
   };
 
   return (
     <Container>
       <Heading>Cart</Heading>
+      {orderSent ? (
+      <p>Order has been sent. Thank you!</p>
+    ) : (
       <Main>
         <Section>
           <Formik
@@ -106,12 +113,12 @@ export const Cart = ({ cartItems, removeFromCart, clearCart, increaseQuantity, d
               ))}
             </CartItems>
             <TotalPrice>Total price: ${calculateTotalPrice()}</TotalPrice>
-            <ClearCartButton type="button" onClick={clearCart}>
+            <ClearCartButton type="button" onClick={clearCart} disabled={orderSent}>
               Clear Cart
             </ClearCartButton>
           </Fieldset>
           </Section>
-      </Main>
+      </Main>)}
     </Container>
   );
 };
