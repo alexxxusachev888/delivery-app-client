@@ -4,6 +4,8 @@ import { CartProvider } from "./utils/CartContext";
 import { Shop, History, ShopCart } from "./pages/index";
 import { SharedLayout } from "./components/SharedLayout/SharedLayout";
 import { theme } from "./utils/theme";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import styled from "@emotion/styled";
 
 const GlobalStyle = () => (
@@ -40,6 +42,7 @@ function App() {
           </Route>
         </Routes>
       </Container>
+      <ToastContainer />
     </CartProvider>
     <GlobalStyle />
     </ThemeProvider>
